@@ -13,6 +13,7 @@ const index = ({
   onChangeDatePicker,
   titleCalendar,
   calendarRef,
+  setTitleCalendar
 }) => {
   const [optionDropdown] = useState("Week");
 
@@ -27,6 +28,7 @@ const index = ({
         onChangeDatePicker={onChangeDatePicker}
         titleCalendar={titleCalendar}
         calendarRef={calendarRef}
+        setTitleCalendar={setTitleCalendar}
       />
       <div></div>
     </StyledCalendarHeader>

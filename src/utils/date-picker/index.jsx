@@ -7,7 +7,7 @@ import moment from "moment";
 import { StyledWrapDatePicker } from "./style";
 import "react-datepicker/dist/react-datepicker.css";
 
-const index = ({ onChangeDatePicker, calendarRef, titleCalendar }) => {
+const index = ({ onChangeDatePicker, calendarRef, titleCalendar, setTitleCalendar}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -68,6 +68,7 @@ const index = ({ onChangeDatePicker, calendarRef, titleCalendar }) => {
     if (calendarRef.current) {
       calendarRef.current.getApi().changeView(viewType);
       calendarRef.current.getApi().gotoDate(newStartDate.toISOString());
+      setTitleCalendar(calendarRef?.current?.calendar?.currentData?.viewTitle);
     }
   };
 

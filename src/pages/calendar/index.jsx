@@ -111,6 +111,7 @@ const index = () => {
         onChangeDatePicker={onChangeDatePicker}
         calendarRef={calendarRef}
         titleCalendar={titleCalendar}
+        setTitleCalendar={setTitleCalendar}
       />
       <Sidebar listSidebar={listSidebar} />
       <div>
