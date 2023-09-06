@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ArrowLeft, ArrowRight } from "react-feather";
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -7,9 +7,9 @@ import moment from "moment";
 import { StyledWrapDatePicker } from "./style";
 import "react-datepicker/dist/react-datepicker.css";
 
-const index = ({ onChangeDatePicker, calendarRef }) => {
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startDate, endDate] = dateRange;
+const index = ({ onChangeDatePicker, calendarRef, titleCalendar }) => {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const defaultWeekRange = () => {
     const currentDate = moment();
@@ -63,18 +63,18 @@ const index = ({ onChangeDatePicker, calendarRef }) => {
         newEndDate = currentDate.clone().endOf("week");
         break;
     }
-
+    setStartDate(moment(newStartDate).toDate());
+    setEndDate(moment(newEndDate).toDate());
     if (calendarRef.current) {
       calendarRef.current.getApi().changeView(viewType);
       calendarRef.current.getApi().gotoDate(newStartDate.toISOString());
     }
-    // setDateRange(newStartDate, newEndDate);
   };
 
   const handleDatePickerChange = (dates) => {
-    if (calendarRef.current) {
+    if (calendarRef?.current) {
       onChangDatePicker(
-        calendarRef.current.getApi().currentData.currentViewType,
+        calendarRef?.current?.getApi()?.currentData?.currentViewType,
         dates
       );
     }
@@ -94,11 +94,7 @@ const index = ({ onChangeDatePicker, calendarRef }) => {
           onChange={handleDatePickerChange}
           customInput={
             <button className="custom-input">
-              {startDate && endDate
-                ? `${moment(startDate).format("MMM D")} – ${moment(
-                    endDate
-                  ).format("D, YYYY")}`
-                : defaultWeekRange()}
+              {titleCalendar || defaultWeekRange()}
             </button>
           }
           monthsShown={2}

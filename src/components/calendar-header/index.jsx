@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // Utils
 import Dropdown from "../../utils/dropdown";
@@ -6,9 +6,14 @@ import DatePicker from "../../utils/date-picker";
 
 // Style
 import { StyledCalendarHeader } from "./style";
-import { LIST_OPTIONS } from "../../utils/data/list-options";
+import { LIST_OPTIONS } from "../../utils/data/event";
 
-const index = ({ calendarRef, onChangeDropdown, onChangeDatePicker }) => {
+const index = ({
+  onChangeDropdown,
+  onChangeDatePicker,
+  titleCalendar,
+  calendarRef,
+}) => {
   const [optionDropdown] = useState("Week");
 
   return (
@@ -18,7 +23,11 @@ const index = ({ calendarRef, onChangeDropdown, onChangeDatePicker }) => {
         options={LIST_OPTIONS}
         onChange={onChangeDropdown}
       />
-      <DatePicker onChangeDatePicker={onChangeDatePicker} calendarRef={calendarRef} />
+      <DatePicker
+        onChangeDatePicker={onChangeDatePicker}
+        titleCalendar={titleCalendar}
+        calendarRef={calendarRef}
+      />
       <div></div>
     </StyledCalendarHeader>
   );

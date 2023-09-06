@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledFullCalendar = styled.div`
-  max-width: 90%;
+  max-width: 99%;
   height: 100%;
   display: block;
   margin: 0 auto;
@@ -10,11 +10,22 @@ export const StyledFullCalendar = styled.div`
   line-height: 1;
   position: relative;
 
+  & .fc-timegrid {
+    z-index: 1;
+  }
+
   & .fc-event {
     margin: 5px 0;
 
+    &:hover {
+      transition: background-color 0.1s linear;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08),
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+        0 0 1px 0 rgba(0, 0, 0, 0.16);
+    }
+
     & .fc-event-main {
-        color: black;
+      color: black;
     }
 
     &.bg-gray {

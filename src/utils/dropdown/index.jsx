@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import {ArrowDown, ArrowUp} from 'react-feather'
+import { ArrowDown, ArrowUp } from "react-feather";
 import { StyledWrapDropdown } from "./style";
 
-const index = ({ options, defaultValue, onChange }) => {
+const Dropdown = ({ options, defaultValue, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
     defaultValue || options[0]
@@ -61,4 +61,4 @@ const index = ({ options, defaultValue, onChange }) => {
   );
 };
 
-export default index;
+export default Dropdown;
