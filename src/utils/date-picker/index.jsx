@@ -64,7 +64,6 @@ const index = ({
       );
     }
   };
-
   return (
     <StyledWrapDatePicker>
       <div className="container">
@@ -75,7 +74,7 @@ const index = ({
         <DatePicker
           selectsRange={true}
           startDate={startDate || moment().startOf("week").toDate()}
-          endDate={!endDate && !startDate && moment().endOf("week").toDate()}
+          endDate={!endDate && !startDate ? moment().endOf("week").toDate() : endDate}
           onChange={handleDatePickerChange}
           customInput={
             <button className="custom-input">

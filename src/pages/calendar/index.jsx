@@ -110,19 +110,15 @@ const index = () => {
     }]);
   };
 
-  // const handleEventDragStop = (eventInfo) => {
-  //   const updatedEvent = {
-  //     ...eventInfo.event.toPlainObject(),
-  //     start: eventInfo.event.start.toISOString(),
-  //     end: eventInfo.event?.end?.toISOString(),
-  //   };
-
-  //   setListEvent((prevListEvent) =>
-  //     prevListEvent.map((event) =>
-  //       String(event.id) === String(updatedEvent.id) ? updatedEvent : event
-  //     )
-  //   );
-  // };
+  const handleEventDragStop = (eventInfo) => {
+    const eventData = eventInfo.event._def;
+    const publicId = eventData.publicId;
+    setListEvent(listEvent.filter(evt => String(evt.id) !== String(publicId)))
+    setListSidebar([...listSidebar, {
+      id: publicId,
+      title: eventData.title,
+    }])
+  };
 
   const handleEventResize = (eventInfo) => {
     const { event } = eventInfo;
@@ -168,7 +164,7 @@ const index = () => {
           views={customViews}
           droppable
           drop={onDropCalendar}
-          // eventDragStop={handleEventDragStop}
+          eventDragStop={handleEventDragStop}
           eventResize={handleEventResize}
         />
       </div>
