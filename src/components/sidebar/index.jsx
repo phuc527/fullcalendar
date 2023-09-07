@@ -14,6 +14,8 @@ const Sidebar = ({ listSidebar }) => {
         <div
           className="item"
           itemID={evtSidebar.id}
+          data-start={evtSidebar.start}
+          data-end={evtSidebar.end}
           key={index}
           draggable={true}
         >

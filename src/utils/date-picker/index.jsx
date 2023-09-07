@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// Library
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "react-feather";
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -6,11 +7,18 @@ import moment from "moment";
 // Style
 import { StyledWrapDatePicker } from "./style";
 import "react-datepicker/dist/react-datepicker.css";
+import { VIEW_DATE_MAPPINGS } from "../constants";
 
-const index = ({ onChangeDatePicker, calendarRef, titleCalendar, setTitleCalendar}) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
+const index = ({
+  onChangeDatePicker,
+  calendarRef,
+  titleCalendar,
+  setTitleCalendar,
+  setStartDate,
+  setEndDate,
+  startDate,
+  endDate,
+}) => {
   const defaultWeekRange = () => {
     const currentDate = moment();
     const title =
@@ -24,47 +32,23 @@ const index = ({ onChangeDatePicker, calendarRef, titleCalendar, setTitleCalenda
 
   const onChangDatePicker = (viewType, dates) => {
     const currentDate = moment(dates[0]);
-    let newStartDate, newEndDate;
-    switch (viewType) {
-      case "timeGridWeek":
-        newStartDate = currentDate.clone().startOf("week");
-        newEndDate = currentDate.clone().endOf("week");
-        break;
-      case "timeGridDay":
-        newStartDate = currentDate.clone().startOf("day");
-        newEndDate = currentDate.clone().endOf("day");
-        break;
-      case "dayGridMonth":
-        newStartDate = currentDate.clone().startOf("month");
-        newEndDate = currentDate.clone().endOf("month");
-        break;
-      case "twoWeeks":
-        newStartDate = currentDate.clone().subtract(3, "days").startOf("week");
-        newEndDate = currentDate.clone().add(10, "days").endOf("week");
-        break;
-      case "threeWeeks":
-        newStartDate = currentDate.clone().subtract(10, "days").startOf("week");
-        newEndDate = currentDate.clone().add(17, "days").endOf("week");
-        break;
-      case "fourWeeks":
-        newStartDate = currentDate.clone().subtract(17, "days").startOf("week");
-        newEndDate = currentDate.clone().add(24, "days").endOf("week");
-        break;
-      case "threeDays":
-        newStartDate = currentDate.clone().startOf("day");
-        newEndDate = currentDate.clone().add(2, "days").endOf("day");
-        break;
-      case "fourDays":
-        newStartDate = currentDate.clone().startOf("day");
-        newEndDate = currentDate.clone().add(3, "days").endOf("day");
-        break;
-      default:
-        newStartDate = currentDate.clone().startOf("week");
-        newEndDate = currentDate.clone().endOf("week");
-        break;
-    }
+
+    const dateMapping =
+      VIEW_DATE_MAPPINGS[viewType] || VIEW_DATE_MAPPINGS.default;
+
+    const newStartDate = currentDate
+      .clone()
+      .subtract(dateMapping.subtractDays || 0, "days")
+      .startOf(dateMapping.startOf || "week");
+
+    const newEndDate = currentDate
+      .clone()
+      .add(dateMapping.addDays || 0, "days")
+      .endOf(dateMapping.endOf || "week");
+
     setStartDate(moment(newStartDate).toDate());
     setEndDate(moment(newEndDate).toDate());
+
     if (calendarRef.current) {
       calendarRef.current.getApi().changeView(viewType);
       calendarRef.current.getApi().gotoDate(newStartDate.toISOString());
@@ -90,8 +74,8 @@ const index = ({ onChangeDatePicker, calendarRef, titleCalendar, setTitleCalenda
         <button onClick={() => onChangeDatePicker("today")}>Today</button>
         <DatePicker
           selectsRange={true}
-          startDate={startDate || moment().startOf('week').toDate()}
-          endDate={endDate || moment().endOf('week').toDate()}
+          startDate={startDate || moment().startOf("week").toDate()}
+          endDate={!endDate && !startDate && moment().endOf("week").toDate()}
           onChange={handleDatePickerChange}
           customInput={
             <button className="custom-input">

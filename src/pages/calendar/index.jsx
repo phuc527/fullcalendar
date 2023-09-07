@@ -15,12 +15,15 @@ import Sidebar from "../../components/sidebar";
 import { EVENT_LIST, SIDEBAR_LIST, customViews } from "../../utils/data/event";
 
 import { StyledFullCalendar } from "./style";
+import { VIEW_MAPS } from "../../utils/constants";
 
 const index = () => {
-  const [listEvent] = useState(EVENT_LIST);
+  const [listEvent, setListEvent] = useState(EVENT_LIST);
   const [listSidebar, setListSidebar] = useState(SIDEBAR_LIST);
   const calendarRef = useRef();
   const [titleCalendar, setTitleCalendar] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     const containerEl = document.getElementById("list-sidebar");
@@ -30,6 +33,8 @@ const index = () => {
         const itemAdd = {
           title: eventEl.innerText,
           id: uuidv4(),
+          start: eventEl.getAttribute("data-start"),
+          end: eventEl.getAttribute("data-end"),
         };
         return itemAdd;
       },
@@ -40,66 +45,99 @@ const index = () => {
     };
   }, []);
 
+  const handleChangeStartAndEndDate = (refChooseDate) => {
+    setStartDate(refChooseDate?.start);
+    setEndDate(
+      refChooseDate?.end &&
+        calendarRef.current?.getApi()?.currentData?.currentViewType !==
+          "timeGridDay"
+        ? refChooseDate.end
+        : null
+    );
+  };
+
   const changeView = (viewName) => {
     if (calendarRef.current) {
+      const refCalendar = calendarRef?.current?.calendar;
       calendarRef.current.getApi().changeView(viewName);
-      setTitleCalendar(calendarRef?.current?.calendar?.currentData?.viewTitle);
+      setTitleCalendar(refCalendar?.currentData?.viewTitle);
+
+      handleChangeStartAndEndDate(
+        refCalendar?.currentData?.dateProfile.activeRange
+      );
     }
   };
 
   const onChangeDropdown = (value) => {
-    switch (value) {
-      case "Day":
-        changeView("timeGridDay");
-        break;
-      case "Week":
-        changeView("timeGridWeek");
-        break;
-      case "2 Weeks":
-        changeView("twoWeeks");
-        break;
-      case "3 Weeks":
-        changeView("threeWeeks");
-        break;
-      case "4 Weeks":
-        changeView("fourWeeks");
-        break;
-      case "Month":
-        changeView("dayGridMonth");
-        break;
-      case "3 Days Rolling":
-        changeView("threeDays");
-        break;
-      case "4 Days Rolling":
-        changeView("fourDays");
-        break;
-      default:
-        break;
+    if (VIEW_MAPS[value]) {
+      changeView(VIEW_MAPS[value]);
     }
   };
 
   const onChangeDatePicker = (value) => {
+    const calendarApi = calendarRef?.current.getApi();
+
     switch (value) {
       case "prev":
-        calendarRef?.current.getApi().prev();
+        calendarApi?.prev();
         break;
       case "next":
-        calendarRef?.current.getApi().next();
+        calendarApi?.next();
         break;
       case "today":
-        calendarRef?.current.getApi().today();
+        calendarApi?.today();
         break;
       default:
         break;
     }
-    setTitleCalendar(calendarRef?.current?.calendar?.currentData?.viewTitle);
+    handleChangeStartAndEndDate(
+      refCalendar?.currentData?.dateProfile.activeRange
+    );
+    setTitleCalendar(calendarApi?.calendar?.currentData?.viewTitle);
   };
 
   const onDropCalendar = (ele) => {
-    setListSidebar(
-      listSidebar.filter(
-        (lstSide) =>
-          String(lstSide.id) !== String(ele.draggedEl.getAttribute("itemid"))
+    const id = String(ele.draggedEl.getAttribute("itemid"));
+    setListSidebar(listSidebar.filter((lstSide) => String(lstSide.id) !== id));
+
+    const removedItem = listSidebar.find(
+      (lstSide) => String(lstSide.id) === id
+    );
+    setListEvent([...listEvent, {
+      ...removedItem,
+      start: ele.date.toISOString(),
+      end: null
+    }]);
+  };
+
+  // const handleEventDragStop = (eventInfo) => {
+  //   const updatedEvent = {
+  //     ...eventInfo.event.toPlainObject(),
+  //     start: eventInfo.event.start.toISOString(),
+  //     end: eventInfo.event?.end?.toISOString(),
+  //   };
+
+  //   setListEvent((prevListEvent) =>
+  //     prevListEvent.map((event) =>
+  //       String(event.id) === String(updatedEvent.id) ? updatedEvent : event
+  //     )
+  //   );
+  // };
+
+  const handleEventResize = (eventInfo) => {
+    const { event } = eventInfo;
+    const updatedEvent = listEvent.find(
+      (item) => String(item.id) === String(event.id)
+    );
+    setListEvent((prevListEvent) =>
+      prevListEvent.map((item) =>
+        String(item.id) === String(updatedEvent.id)
+          ? {
+              ...updatedEvent,
+              start: event?.start?.toISOString(),
+              end: event?.end?.toISOString(),
+            }
+          : item
       )
     );
   };
@@ -112,6 +150,10 @@ const index = () => {
         calendarRef={calendarRef}
         titleCalendar={titleCalendar}
         setTitleCalendar={setTitleCalendar}
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+        startDate={startDate}
+        endDate={endDate}
       />
       <Sidebar listSidebar={listSidebar} />
       <div>
@@ -126,6 +168,8 @@ const index = () => {
           views={customViews}
           droppable
           drop={onDropCalendar}
+          // eventDragStop={handleEventDragStop}
+          eventResize={handleEventResize}
         />
       </div>
     </StyledFullCalendar>
