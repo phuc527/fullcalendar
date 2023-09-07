@@ -90,8 +90,8 @@ const index = ({ onChangeDatePicker, calendarRef, titleCalendar, setTitleCalenda
         <button onClick={() => onChangeDatePicker("today")}>Today</button>
         <DatePicker
           selectsRange={true}
-          startDate={startDate}
-          endDate={endDate}
+          startDate={startDate || moment().startOf('week').toDate()}
+          endDate={endDate || moment().endOf('week').toDate()}
           onChange={handleDatePickerChange}
           customInput={
             <button className="custom-input">
