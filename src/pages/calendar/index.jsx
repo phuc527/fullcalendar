@@ -10,12 +10,15 @@ import { v4 as uuidv4 } from "uuid";
 // Components
 import CalendarHeader from "../../components/calendar-header";
 import Sidebar from "../../components/sidebar";
+import ChartList from "../../components/chart-list";
 
 // Data
 import { EVENT_LIST, SIDEBAR_LIST, customViews } from "../../utils/data/event";
-
-import { StyledFullCalendar } from "./style";
 import { VIEW_MAPS } from "../../utils/constants";
+
+// Style
+import { StyledFullCalendar } from "./style";
+
 
 const index = () => {
   const [listEvent, setListEvent] = useState(EVENT_LIST);
@@ -145,6 +148,7 @@ const index = () => {
         startDate={startDate}
         endDate={endDate}
       />
+      <ChartList />
       <Sidebar listSidebar={listSidebar} />
       <div>
         <FullCalendar
