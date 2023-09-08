@@ -9,18 +9,18 @@ export const jobs = {
   total: '6575',
   data: [
     {
-      label: 'incomplete',
+      label: 'Incomplete',
       percent: '10',
       value: '$11',
-      amount_due: [3, 4, 4, 3, 4, 3, 4, 3, 4 ,3, 4, 3],
+      amount_due: [4, 3.5, 3.6, 3.8, 4, 3.5, 4, 3.5, 3 ,3.5, 4, 3],
       color: '#437ff0',
       borderColor: '#437ff0',
     },
     {
-      label: 'completed',
+      label: 'Completed',
       percent: '9',
       value: '$11',
-      amount_due: [4, 3, 3, 4, 3, 4 , 3, 4, 3 ,4, 3, 4],
+      amount_due: [3, 3.5, 3, 3.5, 4, 3.5, 3, 3.5, 4 ,3.5, 3, 4],
       color: '#c9dbf9',
       borderColor: '#c9dbf9',
     },
