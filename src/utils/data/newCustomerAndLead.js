@@ -1,4 +1,4 @@
-import { generateDataSet, labels } from './chart';
+import { generateDataSet, hideDot, labels } from './chart';
 import { lineChart } from './prototype_chart';
 
 const isFillColor = false;
@@ -34,6 +34,7 @@ const options = {
       padding: 5
     },
   },
+  elements: hideDot,
 };
 
 export const configNewCustomerAndLead = {

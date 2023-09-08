@@ -3,7 +3,6 @@ import { saleForecast } from './prototype_chart';
 
 const isFillColor = true;
 const isShowLabel = false;
-const isShowTitle = true;
 
 const data = {
   labels: labels,

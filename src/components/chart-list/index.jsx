@@ -15,11 +15,16 @@ import { StyledWrapChart } from './style.jsx';
 
 const ChartList = () => {
   return (
-    <StyledWrapChart>
-      <LineChart config={configNewCustomerAndLead} />
-      <LineChart config={configRevenuePerMonth} />
-      <LineChart config={configSaleForeCast} />
-    </StyledWrapChart>
+    <>
+      <StyledWrapChart>
+        <LineChart config={configNewCustomerAndLead} />
+        <LineChart config={configRevenuePerMonth} />
+        <LineChart config={configSaleForeCast} />
+      </StyledWrapChart>
+      <StyledWrapChart>
+        
+      </StyledWrapChart>
+    </>
   );
 };
 

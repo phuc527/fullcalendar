@@ -13,6 +13,12 @@ export const labels = [
   'Dec',
 ];
 
+export const hideDot = {
+  point: {
+    radius: 0,
+  },
+}
+
 // Line Chart Boundaries
 export const optionsDefault = (isShowLabel, title, subTitle) => {
   return {
@@ -59,12 +65,12 @@ export const optionsDefault = (isShowLabel, title, subTitle) => {
         padding: 10,
       },
     },
+    elements: hideDot,
   };
 };
 
 export const generateDataSet = (datasets, isFill, isShowLabel) => {
   const commonOptions = {
-    borderColor: 'rgba(255, 0, 0, 1)',
     fill: !!isFill,
     fillFromStart: !!isFill,
     pointBorderColor: 'transparent',
@@ -77,6 +83,8 @@ export const generateDataSet = (datasets, isFill, isShowLabel) => {
       data: data.amount_due,
       backgroundColor: data.color,
       ...commonOptions,
+      borderColor: data.borderColor,
+      pointBackgroundColor: data.borderColor
     }));
   }
 
@@ -84,6 +92,8 @@ export const generateDataSet = (datasets, isFill, isShowLabel) => {
     label: isShowLabel ? datasets.label : '',
     data: datasets.amount_due,
     backgroundColor: datasets.color,
+    borderColor: datasets.borderColor,
+    pointBackgroundColor: datasets.borderColor,
     ...commonOptions,
   };
 
