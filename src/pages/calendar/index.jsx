@@ -111,13 +111,13 @@ const index = () => {
   };
 
   const handleEventDragStop = (eventInfo) => {
-    const eventData = eventInfo.event._def;
+    const eventData = eventInfo.event._instance;
     const publicId = eventData.publicId;
-    setListEvent(listEvent.filter(evt => String(evt.id) !== String(publicId)))
-    setListSidebar([...listSidebar, {
-      id: publicId,
-      title: eventData.title,
-    }])
+    setListEvent(listEvent.filter(evt => String(evt.id) === String(publicId) ? {
+      ...evt,
+      start: eventData.range.start.toISOString(),
+      end: eventData.range.end.toISOString()
+    } : evt))
   };
 
   const handleEventResize = (eventInfo) => {
@@ -125,17 +125,11 @@ const index = () => {
     const updatedEvent = listEvent.find(
       (item) => String(item.id) === String(event.id)
     );
-    setListEvent((prevListEvent) =>
-      prevListEvent.map((item) =>
-        String(item.id) === String(updatedEvent.id)
-          ? {
-              ...updatedEvent,
-              start: event?.start?.toISOString(),
-              end: event?.end?.toISOString(),
-            }
-          : item
-      )
-    );
+    setListEvent(listEvent.filter(evt => String(evt.id) === String(updatedEvent) ? {
+      ...evt,
+      start: event.start.toISOString(),
+      end: event.end.toISOString()
+    } : evt))
   };
 
   return (
