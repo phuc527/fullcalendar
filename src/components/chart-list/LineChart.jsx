@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
-import { StyledWrapChart } from './style';
+import { StyledItemChart } from './style';
 
 const LineChart = ({ config }) => {
   const chartRef = useRef(null);
@@ -25,9 +25,9 @@ const LineChart = ({ config }) => {
   }, [config]);
 
   return (
-    <StyledWrapChart>
+    <StyledItemChart>
       <canvas className="line-chart" ref={chartRef}></canvas>
-    </StyledWrapChart>
+    </StyledItemChart>
   );
 };
 

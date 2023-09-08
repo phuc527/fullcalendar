@@ -8,6 +8,7 @@ import {
   configSaleForeCast,
   configRevenuePerMonth,
   configNewCustomerAndLead,
+  configCompleteOrInComplete
 } from '../../utils/data/index.js';
 
 // Style
@@ -22,7 +23,7 @@ const ChartList = () => {
         <LineChart config={configSaleForeCast} />
       </StyledWrapChart>
       <StyledWrapChart>
-        
+        <LineChart config={configCompleteOrInComplete} />
       </StyledWrapChart>
     </>
   );

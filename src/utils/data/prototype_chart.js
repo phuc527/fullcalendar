@@ -5,22 +5,24 @@ const stats = {
   revenue: '$1,561,568',
 };
 
-const jobs = {
+export const jobs = {
   total: '6575',
   data: [
     {
-      status: 'incomplete',
+      label: 'incomplete',
       percent: '10',
       value: '$11',
-      amount_due: [0, 1, 2, 3, 5],
-      color: '#fff',
+      amount_due: [3, 4, 4, 3, 4, 3, 4, 3, 4 ,3, 4, 3],
+      color: '#437ff0',
+      borderColor: '#437ff0',
     },
     {
-      status: 'completed',
+      label: 'completed',
       percent: '9',
       value: '$11',
-      amount_due: [0, 1, 2, 3, 5],
-      color: '#fff',
+      amount_due: [4, 3, 3, 4, 3, 4 , 3, 4, 3 ,4, 3, 4],
+      color: '#c9dbf9',
+      borderColor: '#c9dbf9',
     },
   ],
 };
