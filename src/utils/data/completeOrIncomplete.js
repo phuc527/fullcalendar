@@ -5,7 +5,7 @@ const isFillColor = false;
 const isShowLabel = true;
 
 const data = {
-  labels: labels,
+  labels,
   datasets: generateDataSet(jobs.data, isFillColor, isShowLabel)
 };
 
@@ -36,6 +36,6 @@ const options = {
 
 export const configCompleteOrInComplete = {
   type: 'line',
-  data: data,
-  options: options,
+  data,
+  options,
 };

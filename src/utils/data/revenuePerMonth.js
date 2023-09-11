@@ -5,7 +5,7 @@ const isFillColor = true;
 const isShowLabel = true;
 
 const data = {
-  labels: labels,
+  labels,
   datasets: generateDataSet(revenuePerMonth.data, isFillColor, isShowLabel)
 };
 
@@ -13,6 +13,6 @@ const options = optionsDefault(isShowLabel);
 
 export const configRevenuePerMonth = {
   type: 'line',
-  data: data,
-  options: options,
+  data,
+  options,
 };

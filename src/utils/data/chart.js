@@ -19,7 +19,6 @@ export const hideDot = {
   },
 }
 
-// Line Chart Boundaries
 export const optionsDefault = (isShowLabel, title, subTitle) => {
   return {
     responsive: true,

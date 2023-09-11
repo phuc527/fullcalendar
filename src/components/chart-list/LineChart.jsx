@@ -7,9 +7,9 @@ const LineChart = ({ config }) => {
   const chartInstance = useRef(null);
 
   useEffect(() => {
-    if (config && chartRef.current) {
-      const ctx = chartRef.current.getContext('2d');
+    const ctx = chartRef.current?.getContext('2d');
 
+    if (ctx && config) {
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }

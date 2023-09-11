@@ -5,7 +5,7 @@ const isFillColor = true;
 const isShowLabel = false;
 
 const data = {
-  labels: labels,
+  labels,
   datasets: generateDataSet(saleForecast, isFillColor, isShowLabel),
 };
 
@@ -17,6 +17,6 @@ const options = optionsDefault(
 
 export const configSaleForeCast = {
   type: 'line',
-  data: data,
-  options: options,
+  data,
+  options,
 };

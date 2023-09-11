@@ -5,7 +5,7 @@ const isFillColor = false;
 const isShowLabel = true;
 
 const data = {
-  labels: labels,
+  labels,
   datasets: generateDataSet(lineChart.data, isFillColor, isShowLabel)
 };
 
@@ -31,7 +31,6 @@ const options = {
       labels: {
         usePointStyle: true,
       },
-      padding: 5
     },
   },
   elements: hideDot,
@@ -39,6 +38,6 @@ const options = {
 
 export const configNewCustomerAndLead = {
   type: 'line',
-  data: data,
-  options: options,
+  data,
+  options,
 };
